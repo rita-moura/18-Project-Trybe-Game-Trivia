@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 import validateDisabledButton from '../helpers/Validation';
@@ -8,6 +9,7 @@ class Login extends Component {
     email: '',
     name: '',
     disableButton: true,
+    willRedirect: false,
   };
 
   handleChange = ({ target }) => {
@@ -24,8 +26,21 @@ class Login extends Component {
     );
   };
 
+  startGame = () => {
+    const url = 'https://opentdb.com/api_token.php?command=request';
+    fetch(url, { method: 'GET' })
+      .then((data) => data.json())
+      .then((data) => localStorage.setItem('token', data.token))
+      .then(() => this.setState({ willRedirect: true }));
+  };
+
   render() {
-    const { name, email, disableButton } = this.state;
+    const { name, email, disableButton, willRedirect } = this.state;
+
+    if (willRedirect) {
+      return <Redirect to="/game" />;
+    }
+
     return (
       <div>
         <form action="">
@@ -48,6 +63,7 @@ class Login extends Component {
           <button
             type="button"
             data-testid="btn-play"
+            onClick={ this.startGame }
             disabled={ disableButton }
           >
             Play
