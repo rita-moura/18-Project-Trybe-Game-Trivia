@@ -10,6 +10,7 @@ class Login extends Component {
     name: '',
     disableButton: true,
     willRedirect: false,
+    goToSettings: false,
   };
 
   handleChange = ({ target }) => {
@@ -34,11 +35,17 @@ class Login extends Component {
       .then(() => this.setState({ willRedirect: true }));
   };
 
+  redirectToSettings = () => {
+    this.setState({ goToSettings: true });
+  };
+
   render() {
-    const { name, email, disableButton, willRedirect } = this.state;
+    const { name, email, disableButton, willRedirect, goToSettings } = this.state;
 
     if (willRedirect) {
       return <Redirect to="/game" />;
+    } if (goToSettings) {
+      return <Redirect to="/settings" />;
     }
 
     return (
@@ -69,6 +76,13 @@ class Login extends Component {
             Play
           </button>
         </form>
+        <button
+          type="button"
+          data-testid="btn-settings"
+          onClick={ this.redirectToSettings }
+        >
+          Configurações
+        </button>
       </div>
     );
   }
