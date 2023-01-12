@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 import validateDisabledButton from '../helpers/Validation';
+import { fetchAPIToken, userInfo } from '../redux/action/index';
 
 class Login extends Component {
   state = {
@@ -27,12 +29,13 @@ class Login extends Component {
     );
   };
 
-  redirectToGame = () => {
-    const url = 'https://opentdb.com/api_token.php?command=request';
-    fetch(url, { method: 'GET' })
-      .then((data) => data.json())
-      .then((data) => localStorage.setItem('token', data.token))
-      .then(() => this.setState({ goToGame: true }));
+  redirectToGame = async () => {
+    const { name, email } = this.state;
+    const getToken = await fetchAPIToken();
+    const { history, dispatch } = this.props;
+    localStorage.setItem('token', getToken.token);
+    dispatch(userInfo({ name, email }));
+    history.push('/Game');
   };
 
   redirectToSettings = () => {
@@ -88,4 +91,16 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login);
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (globalState) => ({
+  email: globalState.user.email,
+  name: globalState.user.name,
+});
+
+export default connect(mapStateToProps)(Login);
