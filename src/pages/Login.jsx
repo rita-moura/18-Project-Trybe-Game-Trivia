@@ -9,7 +9,7 @@ class Login extends Component {
     email: '',
     name: '',
     disableButton: true,
-    willRedirect: false,
+    goToGame: false,
     goToSettings: false,
   };
 
@@ -27,12 +27,12 @@ class Login extends Component {
     );
   };
 
-  startGame = () => {
+  redirectToGame = () => {
     const url = 'https://opentdb.com/api_token.php?command=request';
     fetch(url, { method: 'GET' })
       .then((data) => data.json())
       .then((data) => localStorage.setItem('token', data.token))
-      .then(() => this.setState({ willRedirect: true }));
+      .then(() => this.setState({ goToGame: true }));
   };
 
   redirectToSettings = () => {
@@ -40,9 +40,9 @@ class Login extends Component {
   };
 
   render() {
-    const { name, email, disableButton, willRedirect, goToSettings } = this.state;
+    const { name, email, disableButton, goToGame, goToSettings } = this.state;
 
-    if (willRedirect) {
+    if (goToGame) {
       return <Redirect to="/game" />;
     } if (goToSettings) {
       return <Redirect to="/settings" />;
@@ -70,7 +70,7 @@ class Login extends Component {
           <button
             type="button"
             data-testid="btn-play"
-            onClick={ this.startGame }
+            onClick={ this.redirectToGame }
             disabled={ disableButton }
           >
             Play
