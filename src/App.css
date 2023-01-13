@@ -30,10 +30,6 @@ body {
   border: 3px solid red;
 }
 
-.neutral {
-  border: rgb(0, 0, 0);
-}
-
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
