@@ -9,15 +9,13 @@ export default class Answers extends Component {
       answerToRender = answer.answer;
     }
     return (
-      <div>
-        <button
-          type="button"
-          onClick={ () => pickAnswer() }
-          data-testid={ answer.matter ? `wrong-answer-${index}` : 'correct-answer' }
-        >
-          {answerToRender}
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={ () => pickAnswer() }
+        data-testid={ answer.matter ? `wrong-answer-${index}` : 'correct-answer' }
+      >
+        {answerToRender}
+      </button>
     );
   }
 }

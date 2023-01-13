@@ -40,11 +40,8 @@ export default class Question extends Component {
   };
 
   randomize = (arr) => {
-    for (let i = arr.length - 1; i > 0; i -= 1) {
-      const x = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[x]] = [arr[x], arr[i]];
-    }
-    return arr;
+    const helper = 0.5;
+    return arr.sort(() => Math.random() - helper);
   };
 
   render() {
