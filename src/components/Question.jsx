@@ -30,7 +30,9 @@ export default class Question extends Component {
   };
 
   pickAnswer = () => {
-    this.setState({ nextLocked: true });
+    this.setState({
+      nextLocked: true,
+    });
   };
 
   handleNext = (func) => {

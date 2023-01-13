@@ -39,7 +39,6 @@ export default class Game extends Component {
 
   render() {
     const { redirectToLogin, redirectToFeedback, arrQuest, index } = this.state;
-
     if (redirectToLogin) {
       return <Redirect to="/" />;
     }
