@@ -4,7 +4,14 @@ import '../style/Games.css';
 
 export default class Answers extends Component {
   render() {
-    const { answer, pickAnswer, index, isButtonDisabled } = this.props;
+    const {
+      answer,
+      pickAnswer,
+      index,
+      isButtonDisabled,
+      shouldChangeButtonColor,
+    } = this.props;
+    const setClassByMatter = answer.matter ? 'incorrect' : 'correct';
     let answerToRender = answer;
     if (answer.matter) {
       answerToRender = answer.answer;
@@ -14,9 +21,8 @@ export default class Answers extends Component {
         type="button"
         onClick={ () => pickAnswer() }
         data-testid={ answer.matter ? `wrong-answer-${index}` : 'correct-answer' }
-        className={ answer.matter ? 'incorrect' : 'correct' }
         disabled={ isButtonDisabled }
-
+        className={ shouldChangeButtonColor ? setClassByMatter : '' }
       >
         {answerToRender}
       </button>

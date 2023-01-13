@@ -21,6 +21,19 @@ body {
   border: 1px solid green;
 }
 
+.correct {
+  border: 3px solid;
+  border-color: rgb(6, 240, 15);
+}
+
+.incorrect {
+  border: 3px solid red;
+}
+
+.neutral {
+  border: rgb(0, 0, 0);
+}
+
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
