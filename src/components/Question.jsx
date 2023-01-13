@@ -67,6 +67,7 @@ export default class Question extends Component {
           ? (
             <button
               type="button"
+              data-testid="btn-next"
               onClick={ () => this.handleNext(btnNext) }
             >
               Next
