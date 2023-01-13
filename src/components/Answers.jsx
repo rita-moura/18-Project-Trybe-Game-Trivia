@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import '../style/Games.css';
 
 export default class Answers extends Component {
   render() {
@@ -13,7 +14,9 @@ export default class Answers extends Component {
         type="button"
         onClick={ () => pickAnswer() }
         data-testid={ answer.matter ? `wrong-answer-${index}` : 'correct-answer' }
+        className={ answer.matter ? 'incorrect' : 'correct' }
         disabled={ isButtonDisabled }
+
       >
         {answerToRender}
       </button>
