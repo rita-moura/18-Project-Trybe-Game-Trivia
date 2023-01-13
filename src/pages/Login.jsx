@@ -32,10 +32,10 @@ class Login extends Component {
   redirectToGame = async () => {
     const { name, email } = this.state;
     const getToken = await fetchAPIToken();
-    const { history, dispatch } = this.props;
+    const { dispatch } = this.props;
     localStorage.setItem('token', getToken.token);
     dispatch(userInfo({ name, email }));
-    history.push('/Game');
+    this.setState({ goToGame: true });
   };
 
   redirectToSettings = () => {
