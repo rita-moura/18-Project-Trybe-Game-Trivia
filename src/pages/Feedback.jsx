@@ -3,17 +3,27 @@ import { Redirect } from 'react-router-dom';
 
 export default class Feedback extends Component {
   state = {
-    goLogin: false,
+    redirectToLogin: false,
+    redirectToRanking: false,
   };
 
   redirectToLogin = () => {
-    this.setState({ goLogin: true });
+    this.setState({ redirectToLogin: true });
+  };
+
+  redirectToRanking = () => {
+    this.setState({ redirectToRanking: true });
   };
 
   render() {
-    const { goLogin } = this.state;
+    const { redirectToLogin, redirectToRanking } = this.state;
 
-    if (goLogin) return <Redirect to="/" />;
+    if (redirectToLogin) {
+      return <Redirect to="/" />;
+    }
+    if (redirectToRanking) {
+      return <Redirect to="/ranking" />;
+    }
 
     return (
       <div data-testid="feedback-text">
@@ -24,6 +34,13 @@ export default class Feedback extends Component {
           onClick={ this.redirectToLogin }
         >
           Play Again
+        </button>
+        <button
+          type="button"
+          data-testid="btn-ranking"
+          onClick={ this.redirectToRanking }
+        >
+          Ranking
         </button>
       </div>
     );
