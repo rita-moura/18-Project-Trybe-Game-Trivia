@@ -9,6 +9,7 @@ export default class Question extends Component {
     answerArray: [],
     seconds: 30,
     showTimer: true,
+    buttonColorChange: false,
   };
 
   componentDidMount() {
@@ -53,13 +54,13 @@ export default class Question extends Component {
   };
 
   pickAnswer = () => {
-    this.setState({ nextLocked: true, showTimer: false });
+    this.setState({ nextLocked: true, showTimer: false, buttonColorChange: true });
   };
 
   handleNext = (func) => {
     this.setState({ nextLocked: false });
     clearInterval(this.gameTimerInterval);
-    this.setState({ showTimer: true, seconds: 30 });
+    this.setState({ showTimer: true, seconds: 30, buttonColorChange: false });
     this.setTimer();
     this.setNewAnswers();
     func();
@@ -72,7 +73,7 @@ export default class Question extends Component {
 
   render() {
     const { selectedQuestion, btnNext } = this.props;
-    const { nextLocked, answerArray, seconds, showTimer } = this.state;
+    const { nextLocked, answerArray, seconds, showTimer, buttonColorChange } = this.state;
     const { category, question } = selectedQuestion;
 
     return (
@@ -90,6 +91,7 @@ export default class Question extends Component {
               pickAnswer={ this.pickAnswer }
               index={ index }
               isButtonDisabled={ seconds === 0 }
+              shouldChangeButtonColor={ buttonColorChange }
             />
           )) }
         </div>
