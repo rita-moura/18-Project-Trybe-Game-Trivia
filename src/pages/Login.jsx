@@ -43,7 +43,12 @@ class Login extends Component {
   };
 
   render() {
-    const { name, email, disableButton, goToGame, goToSettings } = this.state;
+    const {
+      name,
+      email,
+      disableButton,
+      goToGame,
+      goToSettings } = this.state;
 
     if (goToGame) {
       return <Redirect to="/game" />;
