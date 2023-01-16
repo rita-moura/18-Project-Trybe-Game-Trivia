@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 import Header from '../components/Header';
 import Question from '../components/Question';
+import savePlayerToLocalStorage from '../helpers/localStorageItems';
 
-export default class Game extends Component {
+class Game extends Component {
   state = {
     index: 0,
     redirectToLogin: false,
@@ -31,7 +33,10 @@ export default class Game extends Component {
     const { index } = this.state;
     const quatro = 4;
     if (index === quatro) {
-      return this.setState({ redirectToFeedback: true });
+      const { score, name, email } = this.props;
+      this.setState({ redirectToFeedback: true });
+      const player = { score, name, picture: email };
+      savePlayerToLocalStorage(player);
     }
     this.setState({ index: index + 1 }, () => {
       func();
@@ -67,3 +72,11 @@ export default class Game extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  email: state.player.email,
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps)(Game);
