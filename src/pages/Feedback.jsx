@@ -42,7 +42,6 @@ export default class Feedback extends Component {
         >
           Ranking
         </button>
-        <h1>Feedback</h1>
       </div>
     );
   }
