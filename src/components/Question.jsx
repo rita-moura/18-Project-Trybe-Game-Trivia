@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Answers from './Answers';
 import Timer from './Timer';
-import { saveScore } from '../redux/action';
+import { savePickedAnswers, saveScore } from '../redux/action';
 
 class Question extends Component {
   state = {
@@ -13,6 +13,8 @@ class Question extends Component {
     showTimer: true,
     buttonColorChange: false,
   };
+
+  pickedAnswers = [];
 
   componentDidMount() {
     this.setNewAnswers();
@@ -58,14 +60,16 @@ class Question extends Component {
   pickAnswer = (answer) => {
     const { seconds } = this.state;
     this.setState({ nextLocked: true, showTimer: false, buttonColorChange: true });
+    const { dispatch, score, selectedQuestion } = this.props;
 
     if (answer === 'correct') {
-      const { dispatch, score, selectedQuestion } = this.props;
       const multiplier = { easy: 1, medium: 2, hard: 3 };
       const dez = 10;
       const sumScore = dez + (seconds * multiplier[selectedQuestion.difficulty]);
       dispatch(saveScore(sumScore + score));
     }
+    this.pickedAnswers.push(answer);
+    dispatch(savePickedAnswers(this.pickedAnswers));
   };
 
   handleNext = (func) => {
