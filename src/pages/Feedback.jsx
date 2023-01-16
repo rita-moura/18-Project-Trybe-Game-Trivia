@@ -33,7 +33,7 @@ class Feedback extends Component {
     if (correctAnswers.length < minExpected) {
       this.setState({ feedbackMessage: 'Could be better...' });
     }
-    if (correctAnswers.length === minExpected || correctAnswers.length > minExpected) {
+    if (correctAnswers.length >= minExpected) {
       this.setState({ feedbackMessage: 'Well Done!' });
     }
   };
