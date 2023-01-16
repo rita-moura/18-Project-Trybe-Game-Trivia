@@ -19,7 +19,7 @@ export default class Answers extends Component {
     return (
       <button
         type="button"
-        onClick={ () => pickAnswer() }
+        onClick={ () => pickAnswer(setClassByMatter) }
         data-testid={ answer.matter ? `wrong-answer-${index}` : 'correct-answer' }
         disabled={ isButtonDisabled }
         className={ shouldChangeButtonColor ? setClassByMatter : '' }

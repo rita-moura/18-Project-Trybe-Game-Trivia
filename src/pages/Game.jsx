@@ -27,14 +27,15 @@ export default class Game extends Component {
       });
   }
 
-  btnNext = () => {
+  btnNext = (func) => {
     const { index } = this.state;
     const quatro = 4;
     if (index === quatro) {
-      this.setState({ redirectToFeedback: true });
-    } else {
-      this.setState({ index: index + 1 });
+      return this.setState({ redirectToFeedback: true });
     }
+    this.setState({ index: index + 1 }, () => {
+      func();
+    });
   };
 
   render() {
@@ -50,7 +51,6 @@ export default class Game extends Component {
     if (redirectToFeedback) {
       return <Redirect to="/feedback" />;
     }
-
     return (
       <div>
         <Header />

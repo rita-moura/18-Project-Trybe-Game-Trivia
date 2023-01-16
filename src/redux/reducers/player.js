@@ -1,4 +1,4 @@
-import { USER_INFO } from '../action';
+import { USER_INFO, SAVE_SCORE } from '../action';
 
 const INITIAL_STATE = {
   email: '',
@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   score: 0,
 };
 
-const user = (state = INITIAL_STATE, action) => {
+const player = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case USER_INFO:
     return {
@@ -14,8 +14,12 @@ const user = (state = INITIAL_STATE, action) => {
       name: action.payload.name,
       email: action.payload.email,
     };
+  case SAVE_SCORE:
+    return { ...state,
+      score: action.payload,
+    };
   default: return state;
   }
 };
 
-export default user;
+export default player;

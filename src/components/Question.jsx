@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Answers from './Answers';
 import Timer from './Timer';
+import { saveScore } from '../redux/action';
 
-export default class Question extends Component {
+class Question extends Component {
   state = {
     nextLocked: false,
     answerArray: [],
@@ -53,17 +55,25 @@ export default class Question extends Component {
     this.setState({ answerArray: answers });
   };
 
-  pickAnswer = () => {
+  pickAnswer = (answer) => {
+    const { seconds } = this.state;
     this.setState({ nextLocked: true, showTimer: false, buttonColorChange: true });
+
+    if (answer === 'correct') {
+      const { dispatch, score, selectedQuestion } = this.props;
+      const multiplier = { easy: 1, medium: 2, hard: 3 };
+      const dez = 10;
+      const sumScore = dez + (seconds * multiplier[selectedQuestion.difficulty]);
+      dispatch(saveScore(sumScore + score));
+    }
   };
 
   handleNext = (func) => {
+    func(this.setNewAnswers);
     this.setState({ nextLocked: false });
     clearInterval(this.gameTimerInterval);
     this.setState({ showTimer: true, seconds: 30, buttonColorChange: false });
     this.setTimer();
-    this.setNewAnswers();
-    func();
   };
 
   randomize = (arr) => {
@@ -75,7 +85,6 @@ export default class Question extends Component {
     const { selectedQuestion, btnNext } = this.props;
     const { nextLocked, answerArray, seconds, showTimer, buttonColorChange } = this.state;
     const { category, question } = selectedQuestion;
-
     return (
       <div>
         <div>
@@ -110,6 +119,12 @@ export default class Question extends Component {
     );
   }
 }
+
+const mapStateToProps = ({ player: { score } }) => ({
+  score,
+});
+
+export default connect(mapStateToProps)(Question);
 
 Question.propTypes = {
   selectedQuestion: PropTypes.objectOf(Object),
