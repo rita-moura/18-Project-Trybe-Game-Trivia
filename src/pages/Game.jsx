@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import Header from '../components/Header';
 import Question from '../components/Question';
@@ -80,3 +81,9 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Game);
+
+Game.propTypes = {
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+};
