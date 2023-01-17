@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { saveAssertions } from '../redux/action';
 
 class Feedback extends Component {
   state = {
@@ -36,10 +37,16 @@ class Feedback extends Component {
     if (correctAnswers.length >= minExpected) {
       this.setState({ feedbackMessage: 'Well Done!' });
     }
+
+    const { dispatch } = this.props;
+    dispatch(saveAssertions(correctAnswers));
   };
 
   render() {
-    const { redirectToLogin, redirectToRanking, feedbackMessage } = this.state;
+    const {
+      redirectToLogin,
+      redirectToRanking,
+      feedbackMessage } = this.state;
 
     if (redirectToLogin) {
       return <Redirect to="/" />;
@@ -53,6 +60,7 @@ class Feedback extends Component {
         <Header />
         <h1>Feedback</h1>
         <h2 data-testid="feedback-text">{ feedbackMessage }</h2>
+
         <button
           type="button"
           data-testid="btn-play-again"
@@ -80,4 +88,5 @@ export default connect(mapStateToProps)(Feedback);
 
 Feedback.propTypes = {
   score: PropTypes.objectOf(Object).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
