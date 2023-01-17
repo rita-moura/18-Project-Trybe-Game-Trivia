@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../App.css';
 import validateDisabledButton from '../helpers/Validation';
-import { fetchAPIToken, userInfo } from '../redux/action/index';
+import { fetchAPIToken, resetState, userInfo } from '../redux/action/index';
 
 class Login extends Component {
   state = {
@@ -14,6 +14,11 @@ class Login extends Component {
     goToGame: false,
     goToSettings: false,
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetState());
+  }
 
   handleChange = ({ target }) => {
     const { name, value } = target;
