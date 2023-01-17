@@ -1,10 +1,9 @@
-import { USER_INFO, SAVE_SCORE, PICK_ANSWERS } from '../action';
+import { USER_INFO, SAVE_SCORE, PICK_ANSWERS, CLEAR_STATE } from '../action';
 
 const INITIAL_STATE = {
   email: '',
   name: '',
   score: 0,
-  picked: [],
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -24,6 +23,8 @@ const player = (state = INITIAL_STATE, action) => {
       ...state,
       pickedAnswers: action.payload,
     };
+  case CLEAR_STATE:
+    return INITIAL_STATE;
   default: return state;
   }
 };
