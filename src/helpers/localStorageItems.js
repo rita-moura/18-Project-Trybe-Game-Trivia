@@ -1,10 +1,11 @@
 const savePlayerToLocalStorage = (player) => {
   if (!localStorage.ranking) {
     const emptyRanking = [];
-    localStorage.setItem('ranking', emptyRanking);
+    localStorage.setItem('ranking', JSON.stringify(emptyRanking));
   }
-  const rankingLocalStorage = JSON.parse(localStorage.getItem('ranking'));
-  const rankingList = [...rankingLocalStorage, player];
+  const rankingLocalStorage = localStorage.getItem('ranking');
+  const parsedRanking = JSON.parse(rankingLocalStorage);
+  const rankingList = [...parsedRanking, player];
   localStorage.setItem('ranking', JSON.stringify(rankingList));
 };
 
